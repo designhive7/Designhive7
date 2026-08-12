@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zoy is a freelance graphic designer creating memorable visual identities, campaigns, and brand experiences.">
+  <meta name="theme-color" content="#10372b">
+  <title>Zoy — Graphic Designer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>document.documentElement.classList.add('js');</script>
+
+  <style>
+    :root {
+      --forest: #10372b;
+      --deep: #09271e;
+      --green: #345b49;
+      --sage: #d9e3d5;
+      --mist: #edf1e8;
+      --paper: #f7f7f0;
+      --accent: #c9da86;
+      --ink: #10231b;
+      --line: rgba(16, 55, 43, .18);
+      --radius: 24px;
+      --max: 1440px;
+      --header-height: 86px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body.menu-open,
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    section {
+      scroll-margin-top: 80px;
+    }
+
+    .container {
+      width: min(calc(100% - 48px), var(--max));
+      margin-inline: auto;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 22px;
+      color: var(--green);
+      font-size: .74rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 32px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      height: var(--header-height);
+      color: var(--paper);
+      transition: background .3s, color .3s, box-shadow .3s;
+    }
+
+    .site-header.scrolled {
+      color: var(--forest);
+      background: rgba(247, 247, 240, .92);
+      box-shadow: 0 1px 0 var(--line);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      width: min(calc(100% - 48px), var(--max));
+      height: 100%;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -.03em;
+    }
+
+    .logo-mark {
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-size: .95rem;
+      transform: rotate(-8deg);
+    }
+
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav a {
+      position: relative;
+      padding: 12px 0;
+      font-size: .84rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+    }
+
+    .nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: 8px;
+      left: 0;
+      height: 1px;
+      background: currentColor;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .25s ease;
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .header-cta {
+      padding: 11px 17px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      transition: color .2s, background .2s, transform .2s;
+    }
+
+    .header-cta:hover {
+      color: var(--forest);
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .menu-toggle {
+      width: 44px;
+      height: 44px;
+      display: none;
+      place-items: center;
+      padding: 0;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .menu-lines {
+      position: relative;
+      width: 18px;
+      height: 12px;
+    }
+
+    .menu-lines::before,
+    .menu-lines::after {
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 1.5px;
+      background: currentColor;
+      content: "";
+      transition: transform .25s, top .25s;
+    }
+
+    .menu-lines::before { top: 2px; }
+    .menu-lines::after { top: 9px; }
+
+    .menu-toggle[aria-expanded="true"] .menu-lines::before {
+      top: 6px;
+      transform: rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-lines::after {
+      top: 6px;
+      transform: rotate(-45deg);
+    }
+
+    .hero {
+      min-height: 900px;
+      display: grid;
+      align-items: center;
+      position: relative;
+      padding: 145px 0 82px;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 70% 18%, rgba(201, 218, 134, .1), transparent 27%),
+        linear-gradient(135deg, var(--deep), var(--forest) 62%, #174535);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      position: absolute;
+      inset: 0;
+      opacity: .13;
+      pointer-events: none;
+      content: "";
+      background-image:
+        linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to right, black, transparent 82%);
+    }
+
+    .hero-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(350px, .75fr);
+      align-items: center;
+      gap: clamp(40px, 7vw, 110px);
+    }
+
+    .hero-copy {
+      padding-top: 30px;
+    }
+
+    .hero .eyebrow {
+      color: var(--accent);
+    }
+
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 35px;
+      color: var(--sage);
+      font-size: .76rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(201, 218, 134, .12);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      50% { box-shadow: 0 0 0 11px rgba(201, 218, 134, 0); }
+    }
+
+    .hero h1 {
+      max-width: 930px;
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(4rem, 8.2vw, 8.9rem);
+      font-weight: 500;
+      letter-spacing: -.075em;
+      line-height: .84;
+    }
+
+    .hero h1 span {
+      display: block;
+    }
+
+    .hero h1 em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .hero-summary {
+      max-width: 580px;
+      margin: 38px 0 0;
+      color: rgba(247, 247, 240, .7);
+      font-size: clamp(1rem, 1.25vw, 1.15rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 38px;
+    }
+
+    .button {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 22px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: transform .2s, background .2s, color .2s, border-color .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    .button-primary {
+      color: var(--deep);
+      background: var(--accent);
+    }
+
+    .button-secondary {
+      color: var(--paper);
+      border-color: rgba(247,247,240,.35);
+      background: transparent;
+    }
+
+    .button-secondary:hover {
+      border-color: var(--paper);
+    }
+
+    .arrow {
+      font-size: 1.15rem;
+      line-height: 1;
+      transition: transform .2s;
+    }
+
+    .button:hover .arrow,
+    .contact-link:hover .arrow {
+      transform: translate(3px, -3px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 45px;
+      margin-top: 54px;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: -.06em;
+    }
+
+    .stat span {
+      color: rgba(247,247,240,.52);
+      font-size: .72rem;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .hero-visual {
+      position: relative;
+      justify-self: end;
+      width: min(100%, 480px);
+    }
+
+    .hero-frame {
+      position: relative;
+      aspect-ratio: .73;
+      padding: 22px;
+      border-radius: 230px 230px 20px 20px;
+      background: var(--mist);
+      box-shadow: 28px 35px 80px rgba(0,0,0,.24);
+      overflow: hidden;
+      transform: rotate(1.5deg);
+    }
+
+    .hero-frame::after {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: inherit;
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: saturate(.7) contrast(1.04);
+    }
+
+    .visual-label {
+      position: absolute;
+      right: -24px;
+      bottom: 72px;
+      z-index: 2;
+      padding: 14px 20px;
+      color: var(--deep);
+      background: var(--accent);
+      border-radius: 999px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      transform: rotate(-4deg);
+    }
+
+    .visual-number {
+      position: absolute;
+      top: 29px;
+      left: -40px;
+      z-index: 2;
+      width: 86px;
+      height: 86px;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      border: 1px solid rgba(201,218,134,.55);
+      border-radius: 50%;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .ticker {
+      color: var(--forest);
+      background: var(--accent);
+      border-bottom: 1px solid var(--forest);
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      width: max-content;
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+      animation: ticker 26s linear infinite;
+    }
+
+    .ticker-track span {
+      display: inline-flex;
+      align-items: center;
+      gap: 28px;
+      padding-right: 28px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .ticker-track span::after {
+      font-size: 1.2rem;
+      content: "✦";
+    }
+
+    @keyframes ticker {
+      to { transform: translateX(-50%); }
+    }
+
+    .about {
+      padding: 150px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-index {
+      color: var(--green);
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2,
+    .work-heading h2,
+    .contact-heading {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(3.1rem, 6vw, 6.8rem);
+      font-weight: 500;
+      letter-spacing: -.07em;
+      line-height: .92;
+    }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, .8fr) minmax(0, 1.2fr);
+      gap: clamp(55px, 9vw, 140px);
+      align-items: center;
+      padding-top: 70px;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image {
+      aspect-ratio: .83;
+      padding: 16px;
+      background: var(--sage);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.65) contrast(1.03);
+    }
+
+    .about-stamp {
+      position: absolute;
+      right: -32px;
+      bottom: -32px;
+      width: 128px;
+      height: 128px;
+      display: grid;
+      place-items: center;
+      padding: 15px;
+      color: var(--paper);
+      background: var(--forest);
+      border-radius: 50%;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .13em;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(9deg);
+    }
+
+    .about-copy h3 {
+      max-width: 800px;
+      margin: 0 0 30px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.15rem, 4vw, 4.2rem);
+      font-weight: 500;
+      letter-spacing: -.055em;
+      line-height: 1.04;
+    }
+
+    .about-copy h3 span {
+      color: var(--green);
+    }
+
+    .about-copy p {
+      max-width: 700px;
+      margin: 0;
+      color: #496056;
+      font-size: clamp(1.03rem, 1.5vw, 1.25rem);
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+    }
+
+    .skill {
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--forest);
+      background: rgba(217,227,213,.25);
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    .quote {
+      margin-top: 45px;
+      padding: 27px 0 0 28px;
+      border-top: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      color: var(--forest);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      line-height: 1.35;
+    }
+
+    .work {
+      padding: 140px 0 150px;
+      background: var(--sage);
+    }
+
+    .work-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+      margin-bottom: 48px;
+    }
+
+    .work-heading p {
+      max-width: 430px;
+      margin: 0 0 8px;
+      color: var(--green);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 34px;
+    }
+
+    .filter {
+      padding: 10px 16px;
+      border: 1px solid rgba(16,55,43,.24);
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      font-size: .76rem;
+      font-weight: 600;
+      transition: background .2s, color .2s, transform .2s;
+    }
+
+    .filter:hover {
+      transform: translateY(-2px);
+    }
+
+    .filter.active,
+    .filter[aria-pressed="true"] {
+      color: var(--paper);
+      background: var(--forest);
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 28px 20px;
+    }
+
+    .project {
+      grid-column: span 6;
+      transition: opacity .3s, transform .3s;
+    }
+
+    .project.wide {
+      grid-column: span 12;
+    }
+
+    .project.hidden {
+      display: none;
+    }
+
+    .project-media {
+      position: relative;
+      aspect-ratio: 4 / 4.7;
+      background: var(--mist);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .project.wide .project-media {
+      aspect-ratio: 16 / 8.4;
+    }
+
+    .project-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .65s cubic-bezier(.2,.7,.2,1), filter .4s;
+    }
+
+    .project:first-child .project-media img {
+      object-fit: contain;
+      padding: 10px;
+      mix-blend-mode: multiply;
+    }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 20px;
+      background: linear-gradient(transparent 45%, rgba(9,39,30,.55));
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+    }
+
+    .view-circle {
+      width: 76px;
+      height: 76px;
+      display: grid;
+      place-items: center;
+      color: var(--deep);
+      background: var(--accent);
+      border-radius: 50%;
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      transform: scale(.8);
+      transition: transform .3s;
+    }
+
+    .project-open {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .project-media:hover img {
+      transform: scale(1.035);
+      filter: saturate(.78);
+    }
+
+    .project-media:hover .project-overlay {
+      opacity: 1;
+    }
+
+    .project-media:hover .view-circle {
+      transform: scale(1);
+    }
+
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      padding-top: 17px;
+    }
+
+    .project-meta h3 {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.25rem, 2vw, 1.65rem);
+      font-weight: 500;
+      letter-spacing: -.035em;
+    }
+
+    .project-meta span {
+      flex-shrink: 0;
+      color: var(--green);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .contact {
+      position: relative;
+      padding: 140px 0 55px;
+      color: var(--paper);
+      background: var(--deep);
+      overflow: hidden;
+    }
+
+    .contact::before {
+      position: absolute;
+      top: -250px;
+      right: -230px;
+      width: 650px;
+      height: 650px;
+      border: 1px solid rgba(201,218,134,.18);
+      border-radius: 50%;
+      content: "";
+      box-shadow:
+        0 0 0 70px rgba(201,218,134,.03),
+        0 0 0 150px rgba(201,218,134,.025);
+    }
+
+    .contact .eyebrow {
+      color: var(--accent);
+    }
+
+    .contact-heading {
+      max-width: 1050px;
+    }
+
+    .contact-heading em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .contact-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: clamp(60px, 10vw, 150px);
+      margin-top: 80px;
+    }
+
+    .contact-intro {
+      max-width: 440px;
+      margin: 0 0 44px;
+      color: rgba(247,247,240,.62);
+      font-size: 1.05rem;
+    }
+
+    .contact-links {
+      border-top: 1px solid rgba(247,247,240,.17);
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 25px 0;
+      border-bottom: 1px solid rgba(247,247,240,.17);
+    }
+
+    .contact-link small {
+      display: block;
+      margin-bottom: 4px;
+      color: rgba(247,247,240,.42);
+      font-size: .65rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .contact-link strong {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: 500;
+    }
+
+    .contact-link .arrow {
+      color: var(--accent);
+    }
+
+    .contact-form {
+      padding: clamp(25px, 4vw, 48px);
+      color: var(--ink);
+      background: var(--paper);
+      border-radius: var(--radius);
+    }
+
+    .contact-form h3 {
+      margin: 0 0 32px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      font-weight: 500;
+      letter-spacing: -.05em;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 14px 0;
+      color: var(--ink);
+      border: 0;
+      border-bottom: 1px solid rgba(16,55,43,.27);
+      border-radius: 0;
+      outline: 0;
+      background: transparent;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .field textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--forest);
+      box-shadow: 0 1px 0 var(--forest);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #87938c;
+    }
+
+    .submit-button {
+      width: 100%;
+      margin-top: 28px;
+      color: var(--paper);
+      background: var(--forest);
+    }
+
+    .form-status {
+      min-height: 22px;
+      margin: 14px 0 0;
+      color: var(--green);
+      font-size: .8rem;
+    }
+
+    .footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      margin-top: 100px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(247,247,240,.16);
+      color: rgba(247,247,240,.45);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .back-top:hover {
+      color: var(--accent);
+    }
+
+    dialog {
+      width: min(1180px, calc(100% - 32px));
+      max-width: none;
+      padding: 0;
+      border: 0;
+      border-radius: 22px;
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: 0 40px 100px rgba(0,0,0,.4);
+      overflow: hidden;
+    }
+
+    dialog::backdrop {
+      background: rgba(6,25,19,.82);
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox-grid {
+      min-height: min(780px, 88vh);
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(280px, .65fr);
+    }
+
+    .lightbox-media {
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      padding: 25px;
+      background: var(--sage);
+    }
+
+    .lightbox-media img {
+      max-width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      box-shadow: 0 15px 50px rgba(16,55,43,.15);
+    }
+
+    .lightbox-info {
+      display: flex;
+      flex-direction: column;
+      padding: 36px;
+    }
+
+    .dialog-close {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      align-self: flex-end;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: background .2s, color .2s;
+    }
+
+    .dialog-close:hover {
+      color: var(--paper);
+      background: var(--forest);
+    }
+
+    .lightbox-content {
+      margin: auto 0;
+    }
+
+    .lightbox-index {
+      color: var(--green);
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .lightbox-content h3 {
+      margin: 15px 0 14px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2rem, 4vw, 3.7rem);
+      font-weight: 500;
+      letter-spacing: -.06em;
+      line-height: .95;
+    }
+
+    .lightbox-category {
+      color: var(--green);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .lightbox-nav {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .lightbox-nav button {
+      flex: 1;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .lightbox-nav button:hover {
+      color: var(--paper);
+      background: var(--forest);
+    }
+
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .js .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 1050px) {
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-layout {
+        grid-template-columns: 1fr .65fr;
+        gap: 35px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3.9rem, 8.6vw, 7rem);
+      }
+
+      .about-layout {
+        gap: 65px;
+      }
+
+      .contact-layout {
+        gap: 55px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      :root {
+        --header-height: 74px;
+      }
+
+      .container,
+      .header-inner {
+        width: min(calc(100% - 32px), var(--max));
+      }
+
+      .menu-toggle {
+        display: grid;
+      }
+
+      .header-cta {
+        display: none;
+      }
+
+      .nav {
+        position: fixed;
+        top: var(--header-height);
+        right: 16px;
+        left: 16px;
+        display: grid;
+        gap: 0;
+        padding: 14px 24px 25px;
+        color: var(--forest);
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 20px 60px rgba(0,0,0,.18);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-12px);
+        transition: opacity .25s, visibility .25s, transform .25s;
+      }
+
+      .nav.open {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+      }
+
+      .nav a {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 1rem;
+      }
+
+      body.menu-open .site-header {
+        color: var(--forest);
+        background: var(--paper);
+      }
+
+      .hero {
+        min-height: 100svh;
+        padding: 125px 0 70px;
+      }
+
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        padding: 0;
+      }
+
+      .hero h1 {
+        font-size: clamp(3.7rem, 16vw, 6.5rem);
+      }
+
+      .hero-visual {
+        width: min(100%, 420px);
+        justify-self: center;
+        margin-top: 25px;
+      }
+
+      .visual-number {
+        left: -5px;
+      }
+
+      .visual-label {
+        right: -5px;
+      }
+
+      .about,
+      .work {
+        padding: 95px 0;
+      }
+
+      .about-layout,
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .about-image-wrap {
+        width: min(90%, 500px);
+      }
+
+      .about-stamp {
+        right: -15px;
+      }
+
+      .section-head,
+      .work-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .projects {
+        gap: 34px;
+      }
+
+      .project,
+      .project.wide {
+        grid-column: span 12;
+      }
+
+      .project.wide .project-media {
+        aspect-ratio: 4 / 4.7;
+      }
+
+      .contact {
+        padding-top: 95px;
+      }
+
+      .lightbox-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lightbox-media {
+        min-height: 55vh;
+      }
+
+      .lightbox-info {
+        padding: 23px;
+      }
+
+      .lightbox-content {
+        margin: 28px 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero-actions,
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .hero-stats {
+        gap: 28px;
+      }
+
+      .hero-summary {
+        margin-top: 28px;
+      }
+
+      .hero-frame {
+        padding: 12px;
+      }
+
+      .visual-number {
+        width: 68px;
+        height: 68px;
+      }
+
+      .about-stamp {
+        width: 105px;
+        height: 105px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .contact-form {
+        padding: 25px 20px;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+
+      .project-meta {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .lightbox-media {
+        min-height: 48vh;
+        padding: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="#home" class="logo" aria-label="Zoy — Back to home">
+        <span class="logo-mark">Z</span>
+        <span>ZOY®</span>
+      </a>
+
+      <div class="nav-wrap">
+        <nav class="nav" id="mainNav" aria-label="Main navigation">
+          <a href="#home" class="active">Home</a>
+          <a href="#about">About</a>
+          <a href="#work">Previous Work</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <a href="mailto:zoyplug@gmail.com" class="header-cta">Start a project ↗</a>
+
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNav">
+          <span class="menu-lines"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-layout">
+        <div class="hero-copy reveal">
+          <div class="availability">
+            <span class="availability-dot"></span>
+            Available for select freelance projects
+          </div>
+
+          <p class="eyebrow">Independent graphic designer</p>
+
+          <h1>
+            <span>Ideas made</span>
+            <span><em>unmistakable.</em></span>
+          </h1>
+
+          <p class="hero-summary">
+            I build expressive identities, campaign visuals, and design systems that help ambitious brands connect, stand out, and stay remembered.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="button button-primary">
+              Explore my work <span class="arrow">↘</span>
+            </a>
+            <a href="#contact" class="button button-secondary">
+              Let’s work together <span class="arrow">↗</span>
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>04</strong>
+              <span>Years designing</span>
+            </div>
+            <div class="stat">
+              <strong>22</strong>
+              <span>Years young</span>
+            </div>
+            <div class="stat">
+              <strong>∞</strong>
+              <span>Ideas in motion</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <span class="visual-number">01/05</span>
+          <div class="hero-frame">
+            <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1786518177189_xbg6xpexy.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODY1MTgxNzcxODlfeGJnNnhwZXh5LmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODY1MjAzNDYsImV4cCI6MTgxODA1NjM0Nn0.Uovy8-sektDSWdd31XvS3nflkAkYAGXJJRQsh85E7J8" alt="Green apparel concept designed by Zoy">
+          </div>
+          <span class="visual-label">Featured apparel concept</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Brand Identity</span><span>Art Direction</span><span>Apparel Design</span><span>Campaigns</span><span>Digital Design</span>
+        <span>Brand Identity</span><span>Art Direction</span><span>Apparel Design</span><span>Campaigns</span><span>Digital Design</span>
+      </div>
+    </div>
+
+    <section class="about" id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="eyebrow">A little context</p>
+            <h2>About Me</h2>
+          </div>
+          <span class="section-index">01 — Who I am</span>
+        </div>
+
+        <div class="about-layout">
+          <div class="about-image-wrap reveal">
+            <div class="about-image">
+              <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1786518182659_yd1ywzemx.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODY1MTgxODI2NTlfeWQxeXd6ZW14LmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODY1MjAzNDYsImV4cCI6MTgxODA1NjM0Nn0.8e349LK5gHPmJJWHdrHUnZaiI7GPvVzUa1njCVI-LGw" alt="Zoy, freelance graphic designer" loading="lazy">
+            </div>
+            <div class="about-stamp">Designed with purpose — Zoy</div>
+          </div>
+
+          <div class="about-copy reveal">
+            <h3>
+              I’m Zoy, a 22-year-old designer turning raw ideas into <span>clear visual experiences.</span>
+            </h3>
+
+            <p>
+              For the past four years, I’ve worked independently with local businesses and international clients. I help brands communicate with confidence through thoughtful identities, striking campaign visuals, apparel concepts, and flexible design systems.
+            </p>
+
+            <div class="skills" aria-label="Design specialties">
+              <span class="skill">Brand Identity</span>
+              <span class="skill">Art Direction</span>
+              <span class="skill">Apparel Graphics</span>
+              <span class="skill">Social Campaigns</span>
+              <span class="skill">Print Design</span>
+              <span class="skill">Visual Systems</span>
+            </div>
+
+            <blockquote class="quote">
+              “Good design does more than look right—it gives an idea a voice.”
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="work" id="work">
+      <div class="container">
+        <div class="work-heading reveal">
+          <div>
+            <p class="eyebrow">Selected projects</p>
+            <h2>Previous Work</h2>
+          </div>
+          <p>A selection of visual explorations, graphic systems, and concepts created for distinct audiences and ideas.</p>
+        </div>
+
+        <div class="filters reveal" role="group" aria-label="Filter projects">
+          <button class="filter active" type="button" data-filter="all" aria-pressed="true">All work</button>
+          <button class="filter" type="button" data-filter="apparel" aria-pressed="false">Apparel</button>
+          <button class="filter" type="button" data-filter="identity" aria-pressed="false">Identity</button>
+          <button class="filter" type="button" data-filter="campaign" aria-pressed="false">Campaign</button>
+        </div>
+
+        <div class="projects">
+          <article class="project reveal" data-category="apparel" data-title="Velocity" data-type="Apparel Direction">
+            <div class="project-media">
+              <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1786518177189_xbg6xpexy.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODY1MTgxNzcxODlfeGJnNnhwZXh5LmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODY1MjAzNDYsImV4cCI6MTgxODA1NjM0Nn0.Uovy8-sektDSWdd31XvS3nflkAkYAGXJJRQsh85E7J8" alt="Velocity apparel concept" loading="lazy">
+              <button class="project-open" type="button" aria-label="View Velocity project"></button>
+              <div class="project-overlay"><span class="view-circle">View</span></div>
+            </div>
+            <div class="project-meta">
+              <h3>Velocity</h3>
+              <span>Apparel Direction / 01</span>
+            </div>
+          </article>
+
+          <article class="project reveal" data-category="identity" data-title="New Frequency" data-type="Identity System">
+            <div class="project-media">
+              <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1786518178803_e7xvdesth.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODY1MTgxNzg4MDNfZTd4dmRlc3RoLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODY1MjAzNDYsImV4cCI6MTgxODA1NjM0Nn0.-eWph8goioxHB0Nb3V6R1vZU5Wz4sTFUPoHPMYhviJ0" alt="New Frequency design project" loading="lazy">
+              <button class="project-open" type="button" aria-label="View New Frequency project"></button>
+              <div class="project-overlay"><span class="view-circle">View</span></div>
+            </div>
+            <div class="project-meta">
+              <h3>New Frequency</h3>
+              <span>Identity System / 02</span>
+            </div>
+          </article>
+
+          <article class="project reveal" data-category="campaign" data-title="After Hours" data-type="Campaign Design">
+            <div class="project-media">
+              <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1786518179814_zrmiroq0k.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODY1MTgxNzk4MTRfenJtaXJvcTBrLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODY1MjAzNDYsImV4cCI6MTgxODA1NjM0Nn0.qp5Jb8BDr6LnGCY8zK7Sq7APiwuCpK_qsLyPSaVVgPE" alt="After Hours campaign project" loading="lazy">
+              <button class="project-open" type="button" aria-label="View After Hours project"></button>
+              <div class="project-overlay"><span class="view-circle">View</span></div>
+            </div>
+            <div class="project-meta">
+              <h3>After Hours</h3>
+              <span>Campaign Design / 03</span>
+            </div>
+          </article>
+
+          <article class="project reveal" data-category="identity" data-title="Form & Motion" data-type="Visual Identity">
+            <div class="project-media">
+              <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1786518181014_qvv775bm1.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODY1MTgxODEwMTRfcXZ2Nzc1Ym0xLmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODY1MjAzNDYsImV4cCI6MTgxODA1NjM0Nn0.JOdrtGTtjAiYcsVQTe0NX9xMz3d9CBPFlgaS2kQIyYo" alt="Form and Motion visual identity project" loading="lazy">
+              <button class="project-open" type="button" aria-label="View Form and Motion project"></button>
+              <div class="project-overlay"><span class="view-circle">View</span></div>
+            </div>
+            <div class="project-meta">
+              <h3>Form & Motion</h3>
+              <span>Visual Identity / 04</span>
+            </div>
+          </article>
+
+          <article class="project wide reveal" data-category="campaign" data-title="Made to Connect" data-type="Creative Campaign">
+            <div class="project-media">
+              <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1786518182659_yd1ywzemx.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODY1MTgxODI2NTlfeWQxeXd6ZW14LmpwZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODY1MjAzNDYsImV4cCI6MTgxODA1NjM0Nn0.8e349LK5gHPmJJWHdrHUnZaiI7GPvVzUa1njCVI-LGw" alt="Made to Connect creative campaign" loading="lazy">
+              <button class="project-open" type="button" aria-label="View Made to Connect project"></button>
+              <div class="project-overlay"><span class="view-circle">View</span></div>
+            </div>
+            <div class="project-meta">
+              <h3>Made to Connect</h3>
+              <span>Creative Campaign / 05</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">Have an idea?</p>
+          <h2 class="contact-heading">Let’s make something <em>worth remembering.</em></h2>
+        </div>
+
+        <div class="contact-layout">
+          <div class="reveal">
+            <p class="contact-intro">
+              Tell me what you’re building, where you want to take it, and how design can help. I’m available for branding, campaigns, apparel, and visual direction.
+            </p>
+
+            <div class="contact-links">
+              <a class="contact-link" href="mailto:zoyplug@gmail.com">
+                <span>
+                  <small>Email</small>
+                  <strong>zoyplug@gmail.com</strong>
+                </span>
+                <span class="arrow">↗</span>
+              </a>
+
+              <a class="contact-link" href="https://instagram.com/designhive7" target="_blank" rel="noopener noreferrer">
+                <span>
+                  <small>Instagram</small>
+                  <strong>@designhive7</strong>
+                </span>
+                <span class="arrow">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <form class="contact-form reveal" id="contactForm" novalidate>
+            <h3>Start a project</h3>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">Your name</label>
+                <input id="name" name="name" type="text" placeholder="Name or company" required>
+              </div>
+
+              <div class="field">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required>
+              </div>
+
+              <div class="field full">
+                <label for="projectType">What do you need?</label>
+                <select id="projectType" name="projectType" required>
+                  <option value="">Select a project type</option>
+                  <option>Brand identity</option>
+                  <option>Campaign design</option>
+                  <option>Apparel design</option>
+                  <option>Social media design</option>
+                  <option>Other creative work</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="message">Project brief</label>
+                <textarea id="message" name="message" placeholder="Tell me about your idea, goals, and timeline..." required></textarea>
+              </div>
+            </div>
+
+            <button class="button submit-button" type="submit">
+              Send project inquiry <span class="arrow">↗</span>
+            </button>
+            <p class="form-status" id="formStatus" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <footer class="footer">
+          <span>© <span id="year"></span> Zoy. All rights reserved.</span>
+          <a href="#home" class="back-top">Back to top ↑</a>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="projectDialog" aria-labelledby="dialogTitle">
+    <div class="lightbox-grid">
+      <div class="lightbox-media">
+        <img id="dialogImage" src="" alt="">
+      </div>
+
+      <div class="lightbox-info">
+        <button class="dialog-close" id="dialogClose" type="button" aria-label="Close project">×</button>
+
+        <div class="lightbox-content">
+          <span class="lightbox-index" id="dialogIndex">Project 01</span>
+          <h3 id="dialogTitle">Project</h3>
+          <p class="lightbox-category" id="dialogCategory"></p>
+        </div>
+
+        <div class="lightbox-nav">
+          <button id="previousProject" type="button">← Previous</button>
+          <button id="nextProject" type="button">Next →</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const header = document.getElementById('header');
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    const navLinks = [...mainNav.querySelectorAll('a')];
+
+    function updateHeader() {
+      header.classList.toggle('scrolled', window.scrollY > 30);
+    }
+
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Open navigation' : 'Close navigation');
+      mainNav.classList.toggle('open', !isOpen);
+      document.body.classList.toggle('menu-open', !isOpen);
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open navigation');
+        mainNav.classList.remove('open');
+        document.body.classList.remove('menu-open');
+      });
+    });
+
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+          });
+        }
+      });
+    }, { rootMargin: '-35% 0px -58% 0px' });
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
+
+    const filters = [...document.querySelectorAll('.filter')];
+    const projects = [...document.querySelectorAll('.project')];
+
+    filters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        const category = filter.dataset.filter;
+
+        filters.forEach(button => {
+          const active = button === filter;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+
+        projects.forEach(project => {
+          const show = category === 'all' || project.dataset.category === category;
+          project.classList.toggle('hidden', !show);
+        });
+      });
+    });
+
+    const dialog = document.getElementById('projectDialog');
+    const dialogImage = document.getElementById('dialogImage');
+    const dialogTitle = document.getElementById('dialogTitle');
+    const dialogCategory = document.getElementById('dialogCategory');
+    const dialogIndex = document.getElementById('dialogIndex');
+    const dialogClose = document.getElementById('dialogClose');
+    const previousProject = document.getElementById('previousProject');
+    const nextProject = document.getElementById('nextProject');
+    let currentProjectIndex = 0;
+
+    function visibleProjects() {
+      return projects.filter(project => !project.classList.contains('hidden'));
+    }
+
+    function displayProject(project) {
+      const available = visibleProjects();
+      currentProjectIndex = available.indexOf(project);
+      const sourceImage = project.querySelector('img');
+
+      dialogImage.src = sourceImage.src;
+      dialogImage.alt = sourceImage.alt;
+      dialogTitle.textContent = project.dataset.title;
+      dialogCategory.textContent = project.dataset.type;
+      dialogIndex.textContent = `Project ${String(currentProjectIndex + 1).padStart(2, '0')} / ${String(available.length).padStart(2, '0')}`;
+    }
+
+    projects.forEach(project => {
+      project.querySelector('.project-open').addEventListener('click', () => {
+        displayProject(project);
+        dialog.showModal();
+        document.body.classList.add('modal-open');
+      });
+    });
+
+    function moveProject(direction) {
+      const available = visibleProjects();
+      currentProjectIndex = (currentProjectIndex + direction + available.length) % available.length;
+      displayProject(available[currentProjectIndex]);
+    }
+
+    previousProject.addEventListener('click', () => moveProject(-1));
+    nextProject.addEventListener('click', () => moveProject(1));
+
+    function closeDialog() {
+      dialog.close();
+      document.body.classList.remove('modal-open');
+    }
+
+    dialogClose.addEventListener('click', closeDialog);
+
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog) closeDialog();
+    });
+
+    dialog.addEventListener('close', () => {
+      document.body.classList.remove('modal-open');
+    });
+
+    document.addEventListener('keydown', event => {
+      if (!dialog.open) return;
+      if (event.key === 'ArrowLeft') moveProject(-1);
+      if (event.key === 'ArrowRight') moveProject(1);
+    });
+
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+
+    contactForm.addEventListener('submit', event => {
+      event.preventDefault();
+
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        formStatus.textContent = 'Please complete all required fields.';
+        return;
+      }
+
+      const data = new FormData(contactForm);
+      const name = data.get('name');
+      const email = data.get('email');
+      const projectType = data.get('projectType');
+      const message = data.get('message');
+
+      const subject = encodeURIComponent(`${projectType} inquiry from ${name}`);
+      const body = encodeURIComponent(
+        `Hi Zoy,\n\nMy name is ${name}.\nEmail: ${email}\nProject type: ${projectType}\n\nProject brief:\n${message}\n\nBest,\n${name}`
+      );
+
+      formStatus.textContent = 'Opening your email app…';
+      window.location.href = `mailto:zoyplug@gmail.com?subject=${subject}&body=${body}`;
+
+      setTimeout(() => {
+        formStatus.textContent = 'If your email app did not open, email zoyplug@gmail.com directly.';
+      }, 1800);
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
